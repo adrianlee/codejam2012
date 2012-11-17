@@ -1,7 +1,7 @@
 var net = require('net'),
     config = require('./config'),
     manager = require('./manager'),
-    strategies = require('./strategies')();
+    strategies = require('./strategies');
 
 var managers = [];
 var currentManager;
@@ -10,6 +10,9 @@ function beginFeed() {
     var client,
         qouteArray,
         qouteTimeStamp = 0;
+
+    var strategy_object = new strategies();
+    console.log(strategy_object.object);
 
     // Connect to Exchange and request to begin Feed
     client = net.connect(config.qouteServerPort, function() {
@@ -23,17 +26,18 @@ function beginFeed() {
     // On Stream Data Event
     client.on('data', function(payload) {
         var i,
-            qouteArray = payload.split("|");
+            qouteArray = payload.split("|"),
+            time;
 
         for (i=0; i < qouteArray.length; i++) {
             if (validateQoute(qouteArray[i])) {
-
                 // Calculate Moving Averages
-                strategies.EMA()
+                strategy_object.calculateMovingAverage(qouteArray[i], qouteTimeStamp);
 
                 // Qoute has been validated and can be sent to a Manager!
-                managerController(qouteArray[i], qouteTimeStamp++);
+                // managerController(qouteArray[i], qouteTimeStamp);
 
+                qouteTimeStamp++;
             } else {
                 // Check if 'C' character
                 if (qouteArray[i] == 'C') {
@@ -74,7 +78,7 @@ function managerController(data, timestamp) {
         managers.push(managerCreate());
     } else {
         manager = managerAcquire();
-        console.log(manager.value);
+        // console.log(manager.value);
     }
 }
 
