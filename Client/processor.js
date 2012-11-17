@@ -38,7 +38,7 @@ function process_payload (data) {
 
     for (i=0; i < stock_array.length; i++) {
         if (stock_array[i]) {
-            config.verbose ? console.log(stock_array[i]) : null;
+            // config.verbose ? console.log(stock_array[i]) : null;
 
 
             if (validateStockPrice(stock_array[i])) {
@@ -46,7 +46,7 @@ function process_payload (data) {
                 async.series([
                     doMath()
                 ]);
-                time++
+                time++;
             } else {
                 // handle error
 
@@ -82,7 +82,7 @@ function start(io, callback) {
 
         client.on('data', function(data) {
             // Example payload: 10.225|10.225|10.225|10.195|10.225|10.130|10.130|10.160|10.195|10.160|
-            config.verbose ? console.log(data) : null;
+            // config.verbose ? console.log(data) : null;
 
             // Process Payload
             process_payload(data);
@@ -98,4 +98,4 @@ function start(io, callback) {
 module.exports = {
     client: client,
     start: start
-}
+};

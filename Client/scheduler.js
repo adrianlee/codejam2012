@@ -32,7 +32,7 @@ function beginFeed() {
         for (i=0; i < qouteArray.length; i++) {
             if (validateQoute(qouteArray[i])) {
                 // Calculate Moving Averages
-                strategy_object.calculateMovingAverage(qouteArray[i], qouteTimeStamp);
+                strategy_object.calculateMovingAverage(parseFloat(qouteArray[i]), qouteTimeStamp);
 
                 // Qoute has been validated and can be sent to a Manager!
                 // managerController(qouteArray[i], qouteTimeStamp);
@@ -74,7 +74,7 @@ function managerController(data, timestamp) {
     var manager;
     // console.log(data + " @ " + timestamp);
 
-    if (managers.length == 0) {
+    if (managers.length === 0) {
         managers.push(managerCreate());
     } else {
         manager = managerAcquire();
@@ -99,7 +99,7 @@ function managerAcquire() {
                 aquiredManager = managers[i];
             }
         }
-    };
+    }
 
     // No Manager is avaliable
     if (!aquiredManager) {
@@ -115,4 +115,4 @@ function cleanUp() {
 
 module.exports = {
     begin: beginFeed
-}
+};

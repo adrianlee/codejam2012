@@ -14,6 +14,6 @@ Manager.prototype = {
     initiateTrade: function (time, type, price, stradegy) {
 
     }
-}
+};
 
 module.exports = Manager;
