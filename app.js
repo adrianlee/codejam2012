@@ -1,16 +1,17 @@
 var express = require('express'),
     http = require('http'),
     path = require('path'),
-    net = require('net'),
+    app = express(),
+    server = http.createServer(app),
+    io = require('socket.io').listen(server),
 
     // Third Party
     hbs = require('hbs');
 
-var app = express();
+io.set('log level', 1);
 
-var port = process.argv[2] || 3000;
-
-var processor = require('./processor');
+var processor = require('./processor'),
+    config = require('./config');
 
 ////////////////////////////////////////////////
 // Express Configuration
@@ -61,34 +62,22 @@ app.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
-app.get('/go', function(req, res) {
-  var client = net.connect(port, function() {
-    console.log('Client Connected');
-    client.write('H\r\n');
-  });
-
-  client.setEncoding('ascii');
-  // client.setKeepAlive(true);
-
-  client.on('data', function(data) {
-    // Example payload: 10.225|10.225|10.225|10.195|10.225|10.130|10.130|10.160|10.195|10.160|
-    console.log(data);
-
-    // Process Payload
-    processor.process_payload(data);
-
-  });
-
-  client.on('end', function() {
-    console.log('Client Disconnected');
-    client.end();
+app.get('/start', function(req, res) {
+  processor.start(io, function () {
     res.send("done!");
   });
 });
 
 ////////////////////////////////////////////////
+// Socket
+////////////////////////////////////////////////
+io.sockets.on('connection', function (socket) {
+  socket.emit('ping', { msg: 'Hello World' });
+});
+
+////////////////////////////////////////////////
 // HTTP Server
 ////////////////////////////////////////////////
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });

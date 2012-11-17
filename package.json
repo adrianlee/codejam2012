@@ -12,6 +12,7 @@
     "mongoose": "*",
     "socket.io": "*",
     "request": "*",
-    "redis": "*"
+    "redis": "*",
+    "async": "*"
   }
 }
