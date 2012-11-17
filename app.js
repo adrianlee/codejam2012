@@ -10,7 +10,7 @@ var app = express();
 
 var port = process.argv[2] || 3000;
 
-var client;
+var processor = require('./processor');
 
 ////////////////////////////////////////////////
 // Express Configuration
@@ -62,7 +62,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/go', function(req, res) {
-  client = net.connect(port, function() {
+  var client = net.connect(port, function() {
     console.log('Client Connected');
     client.write('H\r\n');
   });
@@ -75,8 +75,7 @@ app.get('/go', function(req, res) {
     console.log(data);
 
     // Process Payload
-    var stock_array = data.split("|");
-    console.log(stock_array);
+    processor.process_payload(data);
 
   });
 
