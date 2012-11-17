@@ -6,19 +6,29 @@ var config = require('./config'),
 var client,
     io_socket;
 
-function validateStockPrice () {
+function validateStockPrice (data) {
 
     // There isn't a requirement in the spec that we
     // validate the data from the Exchange Server but
     // it is good practice to do so :)
 
+    var valid = true;
 
-    return true;
+    if (data == 'C') {
+        console.log("invalid");
+        valid = false;
+    }
+
+    return valid;
 }
 
 function doMath() {
     // client.write('B\r\n');
 }
+
+var time = 0;
+
+var array = [];
 
 function process_payload (data) {
     var i,
@@ -30,24 +40,35 @@ function process_payload (data) {
         if (stock_array[i]) {
             config.verbose ? console.log(stock_array[i]) : null;
 
-            io_socket.sockets.emit('ping', { msg: stock_array[i]});
 
             if (validateStockPrice(stock_array[i])) {
+                array.push( { data: stock_array[i], time: time });
                 async.series([
                     doMath()
                 ]);
+                time++
+            } else {
+                // handle error
+
+                // handle 'C' case
+                if (stock_array[i] == 'C') {
+                    time = 0;
+                    break;
+                }
             }
         }
     }
+
+    console.log(array);
+    io_socket.sockets.emit('data', array);
+    array = [];
 
     // stradegy
 
     // push to redis
 }
 
-module.exports = {
-    client: client,
-    start: function (io, callback) {
+function start(io, callback) {
         io_socket = io;
 
         io_socket.sockets.emit('ping', { msg: "Started!"});
@@ -58,7 +79,6 @@ module.exports = {
         });
 
         client.setEncoding('ascii');
-        // client.setKeepAlive(true);
 
         client.on('data', function(data) {
             // Example payload: 10.225|10.225|10.225|10.195|10.225|10.130|10.130|10.160|10.195|10.160|
@@ -73,5 +93,9 @@ module.exports = {
             client.end();
             callback(); // done
         });
-    }
+}
+
+module.exports = {
+    client: client,
+    start: start
 }

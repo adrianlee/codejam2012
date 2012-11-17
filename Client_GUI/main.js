@@ -62,7 +62,7 @@ app.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
-app.get('/start', function(req, res) {
+app.post('/start', function(req, res) {
   processor.start(io, function () {
     res.send("done!");
   });
