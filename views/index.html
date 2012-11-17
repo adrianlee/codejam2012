@@ -1,0 +1,25 @@
+<p>
+  <button id="go" class="btn btn-success" type="button">Go!</button>
+</p>
+
+{{#extend "scripts"}}
+<script>
+$("#go").click(function() {
+    $.ajax({
+        type: "GET",
+        url: "/go"
+    }).done(function() {
+        console.log("GET - /go");
+        $("#go").removeClass("disabled");
+        $("#go").text("Go!");
+    }).fail(function(jqXHR, textStatus) {
+        alert( "Something went wrong\nRequest failed: " + textStatus );
+        $("#go").removeClass("disabled");
+        $("#go").text("Go!");
+    });
+
+    $("#go").addClass("disabled");
+    $("#go").text("Processing...");
+});
+</script>
+{{/extend}}

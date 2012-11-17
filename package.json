@@ -1,0 +1,17 @@
+{
+  "name": "codejam2012",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "*",
+    "hbs": "*",
+    "hiredis": "*",
+    "mongoose": "*",
+    "socket.io": "*",
+    "request": "*",
+    "redis": "*"
+  }
+}
