@@ -9,24 +9,24 @@ port = config.tradeServerPort || 3000;
 // Create TCP server to listen to Web Server which issues request
 // To listen to commands issued by GUI
 server = net.createServer(function(c) {
-    console.log('Server Connected');
+    console.log(config.getTime() + 'Client Connected');
 
     c.setEncoding('ascii');
 
     c.on('data', function (data) {
-        console.log(data);
         if (data == 'H\r\n') {
+            console.log(config.getTime() + 'Client Initated Exchange to begin feed');
             scheduler.begin();
         }
     });
 
     c.on('end', function() {
-        console.log('Server Disconnected');
+        console.log(config.getTime() + 'Client Disconnected');
     });
 
-    c.write('You have connected to the Trading Server!\r\n');
+    c.write(config.getTime() + 'You have connected to the Trading Server!\r\n');
 });
 
 server.listen(port, function() {
-    console.log('Trading Server (Client) listening on port ' + port);
+    console.log(config.getTime() + 'Trading Server (Client) listening on port ' + port);
 });

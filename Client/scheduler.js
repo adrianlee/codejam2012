@@ -11,11 +11,10 @@ function beginFeed() {
         qouteTimeStamp = config.exchangeOpening;
 
     var strategy_object = new strategies();
-    console.log(strategy_object.object);
 
     // Connect to Exchange and request to begin Feed
     client = net.connect(config.qouteServerPort, function() {
-        console.log('Connected to Exchange');
+        console.log(config.getTime() + 'Connected to Exchange');
         client.write('H\r\n');
     });
 
@@ -27,6 +26,7 @@ function beginFeed() {
         var i,
             qouteArray = payload.split("|"),
             time;
+
 
         for (i=0; i < qouteArray.length; i++) {
             if (validateQoute(qouteArray[i])) {
@@ -42,7 +42,7 @@ function beginFeed() {
                 // Check if 'C' character
                 if (qouteArray[i] == 'C') {
                     // Exchange Closed
-                    console.log("Exchange closed");
+                    console.log(config.getTime() + "Exchange closed");
                     cleanUp();
                 } else {
                     // Throw some error
@@ -53,7 +53,7 @@ function beginFeed() {
 
     // On Stream End Event
     client.on('end', function() {
-        console.log('Disconnected from Exchange');
+        console.log(config.getTime() + 'Disconnected from Exchange');
         client.end();
     });
 }

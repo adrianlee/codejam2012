@@ -148,7 +148,7 @@ function Strategy (type) {
 }
 
 Strategy.prototype.compute = function (price, timestamp) {
-    if (timestamp <= config.exchangeOpening + 32400 ) {
+    if (config.verbose && (timestamp <= config.exchangeOpening + 32400 )) {
         console.log(timestamp + ":" + this.fast.type + ":" + this.fast.period + ":" + this.fast.compute(price, timestamp));
         console.log(timestamp + ":" + this.slow.type + ":" + this.slow.period + ":" + this.slow.compute(price, timestamp));
     }
