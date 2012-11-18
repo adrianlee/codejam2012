@@ -4,20 +4,19 @@ var express = require('express'),
     app = express(),
     server = http.createServer(app),
     io = require('socket.io').listen(server),
+    net = require('net'),
 
     // Third Party
-    hbs = require('hbs');
+    hbs = require('hbs'),
+    config = require('../config');
 
 io.set('log level', 1);
-
-var processor = require('./processor'),
-    config = require('./config');
 
 ////////////////////////////////////////////////
 // Express Configuration
 ////////////////////////////////////////////////
 app.configure(function(){
-  app.set('port', process.env.PORT || 8080);
+  app.set('port', config.guiServerPort || 8080);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'html');
   app.engine('html', hbs.__express);
@@ -63,8 +62,31 @@ app.get('/', function(req, res) {
 });
 
 app.post('/start', function(req, res) {
-  processor.start(io, function () {
-    res.send("done!");
+  client = net.connect(config.tradeServerPort, function() {
+    console.log(config.getTime() + 'Connected to Exchange Qoute Server on port ' + config.qouteServerPort);
+    client.write('H\r\n');
+  });
+
+  client.setEncoding('utf8');
+
+  client.on('data', function(payload) {
+    if (payload == 'C\r\n') {
+      res.send("okay");
+    } else {
+      if (payload.charAt(0) == "{") {
+        // console.log(payload);
+        // console.log(JSON.parse(payload));
+        array = payload.split("\r\n");
+        for (var i=0; i < array.length; i++) {
+          io.sockets.emit('ping', array[i]);
+        }
+      }
+    }
+  });
+
+  client.on('close', function() {
+    console.log(config.getTime() + 'Disconnected from Exchange Qoute Server');
+    client.end();
   });
 });
 

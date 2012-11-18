@@ -1,11 +1,11 @@
 var net = require('net'),
-    config = require('./config'),
+    config = require('../config'),
     manager = require('./manager'),
     strategy = require('./strategy');
 
 // Connects to Exchange and sends 'H' immediately.
 // Payloads are parsed, validated and then processed.
-function beginFeed() {
+function beginFeed(socket) {
     var client,
         qouteArray,
         qouteTimeStamp = config.exchangeOpening,
@@ -25,7 +25,8 @@ function beginFeed() {
     client.on('data', function(payload) {
         var i,
             qouteArray,
-            time;
+            time,
+            obj;
 
         qouteArray = payload.split("|");
 
@@ -42,13 +43,28 @@ function beginFeed() {
                     // Calculate Moving Averages
                     strategyInstance.calculateMovingAverage(parseFloat(qouteArray[i]), qouteTimeStamp);
 
-                    // Qoute has been validated and can be sent to a Manager!
-                    managerInstance.delegate(qouteArray[i], qouteTimeStamp);
+                    // Qoute has been validated, crossover calculated and can be sent to a Manager!
+                    managerInstance.process(strategyInstance, socket);
+                    obj = {}
+                    obj.price = parseFloat(qouteArray[i]);
+                    obj.data0 = strategyInstance.object[0].fastValue;
+                    obj.data1 = strategyInstance.object[0].slowValue;
+                    obj.data2 = strategyInstance.object[1].fastValue;
+                    obj.data3 = strategyInstance.object[1].slowValue;
+                    obj.data4 = strategyInstance.object[2].fastValue;
+                    obj.data5 = strategyInstance.object[2].slowValue;
+                    obj.data6 = strategyInstance.object[3].fastValue;
+                    obj.data7 = strategyInstance.object[3].slowValue;
 
+                    if (qouteTimeStamp < 33400) {
+                        socket.write(JSON.stringify(obj)+"\r\n");
+                    }
                 } else {
                     if (qouteArray[i] == 'C') {
                         // Exchange Closed
                         console.log(config.getTime() + "Exchange Closed");
+
+                        socket.write('C\r\n');
 
                         managerInstance.disconnectFromMarketServer();
                     } else {

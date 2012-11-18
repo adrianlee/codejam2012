@@ -1,8 +1,18 @@
+
+<h2>Hello Judges,</h2>
+<div id="debug">
+<ul>
+    <li>Graph displays last 200 data points</li>
+    <li>Time in X-axis is off to display only the last 200 data points</li>
+    <li>Refresh rate of graphs are set to 150ms</li>
+    <li>Graph should update realtime</li>
+    <li>Since this is a simulations (9 hours of data over ~4 seconds), graph can not keep up with incoming data</li>
+</ul>
+</div>
+
 <p>
   <button id="go" class="btn btn-success" type="button">Start</button>
 </p>
-
-<div id="debug"></div>
 
 <link type="text/css" rel="stylesheet" href="/css/rickshaw.min.css">
 <script src="/js/d3.v2.js"></script>
@@ -38,26 +48,221 @@
 }
 </style>
 
-<div id="chart_container">
-        <div id="y_axis"></div>
-        <div id="chart"></div>
-        <div id="legend"></div>
+<style>
+#chart_container1 {
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+}
+#chart1 {
+        float: left;
+}
+#legend1 {
+        background-color: #fff;
+        float: left;
+        margin-left: 15px;
+}
+#legend1 .label {
+        background-color: #fff;
+        color: #333;
+        text-shadow: 0 0 0;
+}
+#offset_form1 {
+        float: left;
+        margin: 2em 0 0 15px;
+        font-size: 13px;
+}
+#y_axis1 {
+        float: left;
+        width: 50px;
+}
+</style>
+
+<style>
+#chart_container2 {
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+}
+#chart2 {
+        float: left;
+}
+#legend2 {
+        background-color: #fff;
+        float: left;
+        margin-left: 15px;
+}
+#legend2 .label {
+        background-color: #fff;
+        color: #333;
+        text-shadow: 0 0 0;
+}
+#offset_form2 {
+        float: left;
+        margin: 2em 0 0 15px;
+        font-size: 13px;
+}
+#y_axis2 {
+        float: left;
+        width: 50px;
+}
+</style>
+
+<style>
+#chart_container3 {
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+}
+#chart3 {
+        float: left;
+}
+#legend3 {
+        background-color: #fff;
+        float: left;
+        margin-left: 15px;
+}
+#legend3 .label {
+        background-color: #fff;
+        color: #333;
+        text-shadow: 0 0 0;
+}
+#offset_form3 {
+        float: left;
+        margin: 2em 0 0 15px;
+        font-size: 13px;
+}
+#y_axis3 {
+        float: left;
+        width: 50px;
+}
+</style>
+
+
+
+<h3>Simple Moving Average</h3>
+<ul class="nav nav-tabs" id="myTab">
+  <li class="active"><a href="#a">Graph</a></li>
+  <li><a href="#b">History</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="a">
+    <div id="chart_container">
+            <div id="y_axis"></div>
+            <div id="chart"></div>
+            <div id="legend"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="b">
+    <table id="table0" class="table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Manager</th>
+        </tr>
+      </thead>
+      <tbody id="btr">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<h3>Linear Weighted Moving Average</h3>
+<ul class="nav nav-tabs" id="myTab">
+  <li class="active"><a href="#c">Graph</a></li>
+  <li><a href="#d">History</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="c">
+    <div id="chart_container1">
+            <div id="y_axis1"></div>
+            <div id="chart1"></div>
+            <div id="legend1"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="d">
+    <table id="table0" class="table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Manager</th>
+        </tr>
+      </thead>
+      <tbody id="dtr">
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h3>Exponential Moving Average</h3>
+<ul class="nav nav-tabs" id="myTab">
+  <li class="active"><a href="#e">Graph</a></li>
+  <li><a href="#f">History</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="e">
+    <div id="chart_container2">
+            <div id="y_axis2"></div>
+            <div id="chart2"></div>
+            <div id="legend2"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="f">
+    <table id="table0" class="table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Manager</th>
+        </tr>
+      </thead>
+      <tbody id="ftr">
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<h3>Triangular Moving Average</h3>
+<ul class="nav nav-tabs" id="myTab">
+  <li class="active"><a href="#g">Graph</a></li>
+  <li><a href="#h">History</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="g">
+    <div id="chart_container3">
+            <div id="y_axis3"></div>
+            <div id="chart3"></div>
+            <div id="legend3"></div>
+    </div>
+  </div>
+  <div class="tab-pane" id="h">
+    <table id="table0" class="table">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Manager</th>
+        </tr>
+      </thead>
+      <tbody id="htr">
+      </tbody>
+    </table>
+  </div>
 </div>
 
 {{#extend "scripts"}}
 <script>
 
-var refreshRate = 250;
-
-
-var seriesData = [ [], [], [] ];
-var random = new Rickshaw.Fixtures.RandomData(150);
-
-for (var i = 0; i < 1; i++) {
-    random.addData(seriesData);
-}
-
-var palette = new Rickshaw.Color.Palette();
+var refreshRate = 150;
 
 var graph = new Rickshaw.Graph( {
         element: document.querySelector("#chart"),
@@ -66,26 +271,9 @@ var graph = new Rickshaw.Graph( {
         min: 'auto',
         renderer: 'line',
         interpolation: 'linear',
-        // series: [
-        //         {
-        //                 name: "Stock Price",
-        //                 data: seriesData[0],
-        //                 color: palette.color()
-        //         },
-        //         {
-        //                 name: "Window[5]",
-        //                 data: seriesData[1],
-        //                 color: palette.color()
-        //         },
-        //         {
-        //                 name: "Window[20]",
-        //                 data: seriesData[2],
-        //                 color: palette.color()
-        //         }
-        // ]
-        series: new Rickshaw.Series.FixedDuration([{ name: 'data1' } , { name: "data2" }, { name: "data3" }], undefined, {
+        series: new Rickshaw.Series.FixedDuration([{ name: 'price' } , { name: "SMA5" }, { name: "SMA20" }], undefined, {
             timeInterval: 32400,
-            maxDataPoints: 100,
+            maxDataPoints: 200,
             timeBase: 32400
         })
 } );
@@ -105,10 +293,103 @@ var legend = new Rickshaw.Graph.Legend( {
         graph: graph
 } );
 
+var graph1 = new Rickshaw.Graph( {
+        element: document.querySelector("#chart1"),
+        width: 400,
+        height: 200,
+        min: 'auto',
+        renderer: 'line',
+        interpolation: 'linear',
+        series: new Rickshaw.Series.FixedDuration([{ name: 'price' } , { name: "LWMA5" }, { name: "LWMA20" }], undefined, {
+            timeInterval: 32400,
+            maxDataPoints: 200,
+            timeBase: 32400
+        })
+} );
+
+var x_axis1 = new Rickshaw.Graph.Axis.Time( { graph: graph1 } );
+
+var y_axis1 = new Rickshaw.Graph.Axis.Y( {
+        element: document.getElementById('y_axis1'),
+        graph: graph1,
+        // tickFormat: Rickshaw.Fixtures.Number.formatBase1024KMGTP,
+        tickFormat: d3.format("0.1"),
+        orientation: 'left'
+} );
+
+var legend1 = new Rickshaw.Graph.Legend( {
+        element: document.querySelector('#legend1'),
+        graph: graph1
+} );
+
+var graph2 = new Rickshaw.Graph( {
+        element: document.querySelector("#chart2"),
+        width: 400,
+        height: 200,
+        min: 'auto',
+        renderer: 'line',
+        interpolation: 'linear',
+        series: new Rickshaw.Series.FixedDuration([{ name: 'price' } , { name: "EMA5" }, { name: "EMA20" }], undefined, {
+            timeInterval: 32400,
+            maxDataPoints: 200,
+            timeBase: 32400
+        })
+} );
+
+var x_axis2 = new Rickshaw.Graph.Axis.Time( { graph: graph2 } );
+
+var y_axis2 = new Rickshaw.Graph.Axis.Y( {
+        element: document.getElementById('y_axis2'),
+        graph: graph2,
+        // tickFormat: Rickshaw.Fixtures.Number.formatBase1024KMGTP,
+        tickFormat: d3.format("0.1"),
+        orientation: 'left'
+} );
+
+var legend2 = new Rickshaw.Graph.Legend( {
+        element: document.querySelector('#legend2'),
+        graph: graph2
+} );
+
+var graph3 = new Rickshaw.Graph( {
+        element: document.querySelector("#chart3"),
+        width: 400,
+        height: 200,
+        min: 'auto',
+        renderer: 'line',
+        interpolation: 'linear',
+        series: new Rickshaw.Series.FixedDuration([{ name: 'price' } , { name: "TMA5" }, { name: "TMA20" }], undefined, {
+            timeInterval: 32400,
+            maxDataPoints: 200,
+            timeBase: 32400
+        })
+} );
+
+var x_axis3 = new Rickshaw.Graph.Axis.Time( { graph: graph3 } );
+
+var y_axis3 = new Rickshaw.Graph.Axis.Y( {
+        element: document.getElementById('y_axis3'),
+        graph: graph3,
+        // tickFormat: Rickshaw.Fixtures.Number.formatBase1024KMGTP,
+        tickFormat: d3.format("0.1"),
+        orientation: 'left'
+} );
+
+var legend3 = new Rickshaw.Graph.Legend( {
+        element: document.querySelector('#legend3'),
+        graph: graph3
+} );
+
 graph.render();
+graph1.render();
+graph2.render();
+graph3.render();
 
 setInterval( function() {
     graph.render();
+    graph1.render();
+    graph2.render();
+    graph3.render();
 }, refreshRate );
 </script>
 
@@ -130,6 +411,11 @@ $("#go").click(function() {
     $("#go").addClass("disabled");
     $("#go").text("Processing...");
 });
+
+$('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
 </script>
 
 <script src="/socket.io/socket.io.js"></script>
@@ -139,8 +425,39 @@ $("#go").click(function() {
   socket.on('data', function (data) {
     // console.log(data[0].data);
     data.forEach(function(o) {
-        graph.series.addData({data1: o.data*1000, data2: o.data*1000 - 100, data3: o.data*1000 + 100 });
+        graph.series.addData({price: o.data*1000, data2: o.data*1000 - 100, data3: o.data*1000 + 100 });
     });
+  });
+
+  socket.on('ping', function (data) {
+    var o;
+    try {
+        o = JSON.parse(data);
+        console.log(o.strategy);
+        if (o.strategy) {
+            switch (o.strategy) {
+                case "SMA":
+                    $("#btr").append("<tr><td>"+o.time+"</td><td>"+o.type+"</td><td>"+o.price+"</td><td>"+o.manager+"</td></tr>");
+                    break;
+                case "LWMA":
+                    $("#dtr").append("<tr><td>"+o.time+"</td><td>"+o.type+"</td><td>"+o.price+"</td><td>"+o.manager+"</td></tr>");
+                    break;
+                case "EMA":
+                    $("#ftr").append("<tr><td>"+o.time+"</td><td>"+o.type+"</td><td>"+o.price+"</td><td>"+o.manager+"</td></tr>");
+                    break;
+                case "TMA":
+                    $("#htr").append("<tr><td>"+o.time+"</td><td>"+o.type+"</td><td>"+o.price+"</td><td>"+o.manager+"</td></tr>");
+                    break;
+
+            }
+        } else {
+            graph.series.addData({price: o.price*1000, SMA5: o.data0*1000, SMA20: o.data1*1000 });
+            graph1.series.addData({price: o.price*1000, LWMA5: o.data2*1000, LWMA20: o.data3*1000 });
+            graph2.series.addData({price: o.price*1000, EMA5: o.data4*1000, EMA20: o.data5*1000 });
+            graph3.series.addData({price: o.price*1000, TMA5: o.data6*1000, TMA20: o.data7*1000 });
+        }
+    } catch (e) {
+    }
   });
 </script>
 

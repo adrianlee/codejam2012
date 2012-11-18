@@ -1,5 +1,7 @@
 var net = require('net'),
-    config = require("./config");
+    config = require("../config"),
+    request = require("request"),
+    fs = require('fs');
 
 function Manager (name, timestamp) {
     this.name = name;
@@ -21,8 +23,10 @@ Manager.prototype = {
 
         return avaliableFlag;
     },
-    initiateTrade: function (time, type, price, stradegy) {
-
+    initiateTrade: function (trade, socket) {
+        // time, type, price, stradegy
+        // console.log(trade);
+        this.currentTrades.push(trade);
     },
     tick: function () {
         this.loggedTime++;
@@ -48,6 +52,7 @@ function ManagerController() {
 
     this.managers = [];
     this.tradeQueue = [];
+    this.transactions = []; // Should store in Redis.
 
     this.client = net.connect(config.marketServerPort, config.exchangeIP, function() {
         console.log(config.getTime() + 'Connected to Exchange Market Server on port ' + config.marketServerPort);
@@ -80,6 +85,9 @@ ManagerController.prototype.tick = function () {
 
 ManagerController.prototype.disconnectFromMarketServer = function () {
     // Check for active trades, if not, wait X second before close.
+
+    this.report();
+
     if (this.tradeQueue.length === 0) {
         setTimeout(function (socket) {
             socket.end();
@@ -88,21 +96,70 @@ ManagerController.prototype.disconnectFromMarketServer = function () {
 };
 
 ManagerController.prototype.processOnData = function (payload) {
-    console.log(payload);
+    var trade = this.tradeQueue.shift();
+
+    if (trade) {
+        this.transactions.push(trade);
+        this.socket.write(JSON.stringify(trade)+"\r\n");
+    }
+};
+
+ManagerController.prototype.report = function () {
+    var obj = {};
+
+    obj.method = "POST";
+    obj.url = "https://stage-api.e-signlive.com/aws/rest/services/codejam";
+    obj.headers = {
+        Authentication: "Basic Y29kZWphbTpBRkxpdGw0TEEyQWQx"
+    };
+    obj.json = {
+        team: "Adrian Lee",
+        destination: "mcgillcodejam2012@gmail.com",
+        transactions: this.transactions
+    };
+
+    request.post(obj, function (e, r, body) {
+        console.log(e);
+        console.log(r);
+        console.log(body);
+    });
+
+    fs.writeFile("codejam.json", JSON.stringify(obj.json, null, ' '), function(err){
+      if (err) console.log(err);
+    });
 };
 
 ManagerController.prototype.create = function () {
     return new Manager("Manager" + (this.managers.length + 1));
 };
 
-ManagerController.prototype.delegate = function () {
+ManagerController.prototype.process = function (strategyInstance, socket) {
     var i,
+        trade;
+
+    if (!this.socket) {
+        this.socket = socket;
+    }
+
+
+    for (i=0; i < strategyInstance.object.length; i++) {
+        trade = strategyInstance.object[i].tradeQueue.shift()
+
+        if (trade) {
+            this.delegate(trade);
+        }
+    }
+};
+
+ManagerController.prototype.delegate = function (trade) {
+    var i,
+        j,
         aquiredManager = null;
 
     // Minimalize number of Managers by utilizing existing.
     // Check if each are free before creating a new Manager
     for (i=0; i < this.managers.length; i++) {
-        if (this.managers[i].checkAvailability()) {
+        if (this.managers[i].checkAvailability(trade)) {
             // Get the first avaliable manager
             if (!aquiredManager) {
                 aquiredManager = this.managers[i];
@@ -115,7 +172,11 @@ ManagerController.prototype.delegate = function () {
         aquiredManager = managerCreate();
     }
 
-    return aquiredManager;
+    trade.manager = aquiredManager.name;
+    aquiredManager.initiateTrade(trade, this.socket);
+
+    this.tradeQueue.push(trade);
+    this.client.write(trade.type + "\r\n");
 };
 
 module.exports = ManagerController;

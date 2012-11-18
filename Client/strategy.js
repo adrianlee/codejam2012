@@ -1,4 +1,4 @@
-var config = require('./config'),
+var config = require('../config'),
     FAST_PERIOD = 5,
     SLOW_PERIOD = 20;
 
@@ -82,7 +82,6 @@ EMA.prototype.compute = function (price, timestamp) {
 function TMA(period) {
     this.period = period;
     this.array = [];
-    this.SMAarray = [];
     this.SMA = new SMA(this.period);
 }
 
@@ -111,6 +110,7 @@ function StrategyFactory (type) {
     this.fast = null;
     this.slow = null;
     this.currentTrend = null;
+    this.tradeQueue = [];
 
     switch (type) {
         case "SMA":
@@ -133,20 +133,38 @@ function StrategyFactory (type) {
 }
 
 StrategyFactory.prototype.compute = function (price, timestamp) {
+    this.fastValue = this.fast.compute(price, timestamp);
+    this.slowValue = this.slow.compute(price, timestamp);
+
     if (config.verbose && (timestamp <= config.exchangeOpening + 15 )) {
-        console.log(timestamp + ":" + this.fast.type + ":" + this.fast.period + ":" + this.fast.compute(price, timestamp));
-        console.log(timestamp + ":" + this.slow.type + ":" + this.slow.period + ":" + this.slow.compute(price, timestamp));
+        console.log(timestamp + ":" + this.fast.type + ":" + this.fast.period + ":" + this.fastValue);
+        console.log(timestamp + ":" + this.slow.type + ":" + this.slow.period + ":" + this.slowValue);
     }
 
-    this.computeCrossOver();
+    // Calc crossover after SLOW_PERIOD data points processed
+    if (config.exchangeOpening + SLOW_PERIOD < timestamp) {
+        this.computeCrossOver(this.fastValue, this.slowValue, price, timestamp);
+    }
 };
 
-StrategyFactory.prototype.computeCrossOver = function () {
-    if (!this.currentTrend) {
-        this.currentTrend = "hello";
+StrategyFactory.prototype.computeCrossOver = function (fast, slow, price, timestamp) {
+    var newTrend;
+
+    if (this.currentTrend == null) {
+        this.currentTrend = fast - slow;
+    } else {
+        newTrend = fast - slow;
+
+        if (this.currentTrend < 0 && newTrend > 0) {
+            this.tradeQueue.push({strategy: this.fast.type, type: "B", price: price, time: timestamp});
+        } else if (this.currentTrend > 0 && newTrend < 0) {
+            this.tradeQueue.push({strategy: this.fast.type, type: "S", price: price, time: timestamp});
+        }
+
+        this.currentTrend = newTrend;
     }
-    // console.log(this.currentTrend);
 };
+
 
 function Strategy () {
     this.object = [];
