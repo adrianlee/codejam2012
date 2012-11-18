@@ -1,10 +1,14 @@
 #codejam2012
 
 ## Virtual Machine
-### Ubuntu Server 12.10
-For boot login & SSH & sudo
+### Ubuntu Server 12.10 x86
+####For boot login & SSH & sudo
 - Username: ubuntu
 - Password: reverse
 
 #### Disclaimer
-Mac OS X Keyboard and Virtual Box doesn't play well together.
+Keyboard layout is set to ***mac-usb-us***.
+If keyboard layout is incorrect for you:
+- SSH to ubuntu@<LAN address>, address found via `ifconfig`
+- or, `sudo dpkg-reconfigure keyboard-configuration` to change keyboard layout
+
