@@ -82,7 +82,7 @@ ManagerController.prototype.disconnectFromMarketServer = function () {
     // Check for active trades, if not, wait X second before close.
     if (this.tradeQueue.length === 0) {
         setTimeout(function (socket) {
-            socket.end()
+            socket.end();
         }, 1000, this.client);
     }
 };
@@ -95,7 +95,7 @@ ManagerController.prototype.create = function () {
     return new Manager("Manager" + this.managers.length + 1);
 };
 
-ManagerController.prototype.delegate() = function () {
+ManagerController.prototype.delegate = function () {
     var i,
         aquiredManager = null;
 
@@ -116,6 +116,6 @@ ManagerController.prototype.delegate() = function () {
     }
 
     return aquiredManager;
-}
+};
 
 module.exports = ManagerController;

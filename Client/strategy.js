@@ -127,9 +127,9 @@ TMA.prototype.compute = function (price, timestamp) {
 };
 
 function StrategyFactory (type) {
-    this.fast;
-    this.slow;
-    this.currentTrend;
+    this.fast = null;
+    this.slow = null;
+    this.currentTrend = null;
 
     switch (type) {
         case "SMA":
