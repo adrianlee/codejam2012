@@ -4,10 +4,10 @@
 ### Ubuntu Server 12.10 x86
 
 #### Usage
-- Start Client & GUI processes via `./start`
-- Stop processes via `./stop`
+- Start Client & GUI deamon processes via `./start`
+- Stop deamon processes via `./stop`
 - Process stout log files: `client.log` & `client_gui.log`
-- Other usages: `forever -h`
+- Other usages to monitor processes: `forever -h`
 
 ####Login, SSH, sudo
 - Username: *ubuntu*
