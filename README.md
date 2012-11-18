@@ -2,6 +2,11 @@
 
 ## Virtual Machine
 ### Ubuntu Server 12.10 x86
+
+#### Usage
+- Start Client & Client GUI via `./start`
+- Stop Processes via `./stop`
+
 ####Login, SSH, sudo
 - Username: *ubuntu*
 - Password: *reverse*
