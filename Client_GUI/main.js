@@ -58,7 +58,7 @@ hbs.registerHelper('block', function(name) {
 // Router
 ////////////////////////////////////////////////
 app.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express', host: config.externalIP});
 });
 
 app.post('/start', function(req, res) {
