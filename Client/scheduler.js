@@ -4,12 +4,11 @@ var net = require('net'),
     strategies = require('./strategies');
 
 var managers = [];
-var currentManager;
 
 function beginFeed() {
     var client,
         qouteArray,
-        qouteTimeStamp = 0;
+        qouteTimeStamp = config.exchangeOpening;
 
     var strategy_object = new strategies();
     console.log(strategy_object.object);
@@ -31,13 +30,14 @@ function beginFeed() {
 
         for (i=0; i < qouteArray.length; i++) {
             if (validateQoute(qouteArray[i])) {
+                qouteTimeStamp++;
+
                 // Calculate Moving Averages
                 strategy_object.calculateMovingAverage(parseFloat(qouteArray[i]), qouteTimeStamp);
 
                 // Qoute has been validated and can be sent to a Manager!
                 // managerController(qouteArray[i], qouteTimeStamp);
 
-                qouteTimeStamp++;
             } else {
                 // Check if 'C' character
                 if (qouteArray[i] == 'C') {
@@ -60,9 +60,9 @@ function beginFeed() {
 
 function validateQoute(data) {
     var validFlag = false,
-        decimal = /^\d{1,2}(\.\d{3})?$/;
+        decimal = /^\d{1,3}(\.\d{3})?$/;
 
-    // RegEx: 1-2 Integer & 3 Decimal
+    // RegEx: 1-3 Integer & 3 Decimal
     if (data.match(decimal)) {
         validFlag = true;
     }
