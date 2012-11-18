@@ -49,7 +49,7 @@ function ManagerController() {
     this.managers = [];
     this.tradeQueue = [];
 
-    this.client = net.connect(config.marketServerPort, function() {
+    this.client = net.connect(config.marketServerPort, config.exchangeIP, function() {
         console.log(config.getTime() + 'Connected to Exchange Market Server on port ' + config.marketServerPort);
     });
 

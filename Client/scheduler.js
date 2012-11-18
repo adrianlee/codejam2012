@@ -13,7 +13,7 @@ function beginFeed() {
         strategyInstance = new strategy();
 
     // Connect to Exchange and request to begin Feed
-    client = net.connect(config.qouteServerPort, function() {
+    client = net.connect(config.qouteServerPort, config.exchangeIP, function() {
         console.log(config.getTime() + 'Connected to Exchange Qoute Server on port ' + config.qouteServerPort);
         client.write('H\r\n');
     });
