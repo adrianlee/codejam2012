@@ -6,7 +6,7 @@ var net = require('net'),
 
 port = config.tradeServerPort || 3000;
 
-// Creates TCP server to interface with Web Server (GUI)
+// Creates an TCP server to interface with Web Server (GUI)
 server = net.createServer(function(c) {
     console.log(config.getTime() + 'Client Connected');
     c.write(config.getTime() + 'You have connected to the Trading Server!\r\n');

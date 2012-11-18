@@ -79,7 +79,7 @@ function EMA(period) {
 
 EMA.prototype.type = "EMA";
 EMA.prototype.compute = function (price, timestamp) {
-    if (this.currentAverage  == 0) {
+    if (this.currentAverage  === 0) {
         this.currentAverage = price;
     } else {
         this.currentAverage = this.currentAverage + (2.0/(this.period+1.0) * (price - this.currentAverage));
@@ -127,6 +127,10 @@ TMA.prototype.compute = function (price, timestamp) {
 };
 
 function StrategyFactory (type) {
+    this.fast;
+    this.slow;
+    this.currentTrend;
+
     switch (type) {
         case "SMA":
             this.fast = new SMA(FAST_PERIOD);
@@ -148,14 +152,19 @@ function StrategyFactory (type) {
 }
 
 StrategyFactory.prototype.compute = function (price, timestamp) {
-    if (config.verbose && (timestamp <= config.exchangeOpening + 32400 )) {
+    if (config.verbose && (timestamp <= config.exchangeOpening + 15 )) {
         console.log(timestamp + ":" + this.fast.type + ":" + this.fast.period + ":" + this.fast.compute(price, timestamp));
         console.log(timestamp + ":" + this.slow.type + ":" + this.slow.period + ":" + this.slow.compute(price, timestamp));
     }
+
+    this.computeCrossOver();
 };
 
 StrategyFactory.prototype.computeCrossOver = function () {
-
+    if (!this.currentTrend) {
+        this.currentTrend = "hello";
+    }
+    // console.log(this.currentTrend);
 };
 
 function Strategy () {
