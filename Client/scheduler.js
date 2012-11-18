@@ -1,16 +1,18 @@
 var net = require('net'),
     config = require('./config'),
     manager = require('./manager'),
-    strategies = require('./strategies');
+    strategy = require('./strategy');
 
 var managers = [];
 
+// Connects to Exchange and sends 'H' immediately.
+// Payloads are parsed, validated and then processed.
 function beginFeed() {
     var client,
         qouteArray,
         qouteTimeStamp = config.exchangeOpening;
 
-    var strategy_object = new strategies();
+    var strategy_object = new strategy();
 
     // Connect to Exchange and request to begin Feed
     client = net.connect(config.qouteServerPort, function() {
@@ -39,13 +41,12 @@ function beginFeed() {
                 // managerController(qouteArray[i], qouteTimeStamp);
 
             } else {
-                // Check if 'C' character
                 if (qouteArray[i] == 'C') {
                     // Exchange Closed
                     console.log(config.getTime() + "Exchange closed");
                     cleanUp();
                 } else {
-                    // Throw some error
+                    // Invalid data from Exchange
                 }
             }
         }

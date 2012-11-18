@@ -126,7 +126,7 @@ TMA.prototype.compute = function (price, timestamp) {
     return Math.round(result * 1000) / 1000;
 };
 
-function Strategy (type) {
+function StrategyFactory (type) {
     switch (type) {
         case "SMA":
             this.fast = new SMA(FAST_PERIOD);
@@ -147,26 +147,26 @@ function Strategy (type) {
     }
 }
 
-Strategy.prototype.compute = function (price, timestamp) {
+StrategyFactory.prototype.compute = function (price, timestamp) {
     if (config.verbose && (timestamp <= config.exchangeOpening + 32400 )) {
         console.log(timestamp + ":" + this.fast.type + ":" + this.fast.period + ":" + this.fast.compute(price, timestamp));
         console.log(timestamp + ":" + this.slow.type + ":" + this.slow.period + ":" + this.slow.compute(price, timestamp));
     }
 };
 
-Strategy.prototype.computeCrossOver = function () {
+StrategyFactory.prototype.computeCrossOver = function () {
 
 };
 
-function Strategies () {
+function Strategy () {
     this.object = [];
-    this.object.push(new Strategy("SMA"));
-    this.object.push(new Strategy("LWMA"));
-    this.object.push(new Strategy("EMA"));
-    this.object.push(new Strategy("TMA"));
+    this.object.push(new StrategyFactory("SMA"));
+    this.object.push(new StrategyFactory("LWMA"));
+    this.object.push(new StrategyFactory("EMA"));
+    this.object.push(new StrategyFactory("TMA"));
 }
 
-Strategies.prototype.calculateMovingAverage = function (price, timestamp) {
+Strategy.prototype.calculateMovingAverage = function (price, timestamp) {
     var i = 0;
 
     for (i=0; i < this.object.length; i++) {
@@ -174,4 +174,4 @@ Strategies.prototype.calculateMovingAverage = function (price, timestamp) {
     }
 };
 
-module.exports = Strategies;
+module.exports = Strategy;

@@ -6,14 +6,15 @@ var net = require('net'),
 
 port = config.tradeServerPort || 3000;
 
-// Create TCP server to listen to Web Server which issues request
-// To listen to commands issued by GUI
+// Creates TCP server to interface with Web Server (GUI)
 server = net.createServer(function(c) {
     console.log(config.getTime() + 'Client Connected');
+    c.write(config.getTime() + 'You have connected to the Trading Server!\r\n');
 
     c.setEncoding('ascii');
 
     c.on('data', function (data) {
+        // 'H' is sent by the web server once user hits 'Start' on the GUI
         if (data == 'H\r\n') {
             console.log(config.getTime() + 'Client Initated Exchange to begin feed');
             scheduler.begin();
@@ -23,8 +24,6 @@ server = net.createServer(function(c) {
     c.on('end', function() {
         console.log(config.getTime() + 'Client Disconnected');
     });
-
-    c.write(config.getTime() + 'You have connected to the Trading Server!\r\n');
 });
 
 server.listen(port, function() {
