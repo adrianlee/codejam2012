@@ -2,13 +2,13 @@
 
 ## Virtual Machine
 ### Ubuntu Server 12.10 x86
-####For boot login & SSH & sudo
-- Username: ubuntu
-- Password: reverse
+####Login, SSH, sudo
+- Username: *ubuntu*
+- Password: *reverse*
 
 #### Disclaimer
-Keyboard layout is set to ***mac-usb-us***.
+Keyboard layout is set to *mac-usb-us*.
 If keyboard layout is incorrect for you:
-- SSH to ubuntu@<LAN address>, address found via `ifconfig`
+- SSH to `ubuntu@xxx.xxx.xxx.xxx`, LAN address found via `ifconfig`
 - or, `sudo dpkg-reconfigure keyboard-configuration` to change keyboard layout
 
