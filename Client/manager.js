@@ -50,7 +50,7 @@ function ManagerController() {
     this.tradeQueue = [];
 
     this.client = net.connect(config.marketServerPort, function() {
-        console.log(config.getTime() + 'Connected to Exchange Market Server');
+        console.log(config.getTime() + 'Connected to Exchange Market Server on port ' + config.marketServerPort);
     });
 
     // Makes the 'data' event emit a string instead of a Buffer

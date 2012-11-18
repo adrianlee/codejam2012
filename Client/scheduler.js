@@ -14,7 +14,7 @@ function beginFeed() {
 
     // Connect to Exchange and request to begin Feed
     client = net.connect(config.qouteServerPort, function() {
-        console.log(config.getTime() + 'Connected to Exchange Qoute Server');
+        console.log(config.getTime() + 'Connected to Exchange Qoute Server on port ' + config.qouteServerPort);
         client.write('H\r\n');
     });
 
