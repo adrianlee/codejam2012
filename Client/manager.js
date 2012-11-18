@@ -38,7 +38,7 @@ Manager.prototype = {
 
     },
     signOut: function () {
-        // Give jobs away
+        // assign jobs away if any
     }
 };
 
@@ -92,7 +92,7 @@ ManagerController.prototype.processOnData = function (payload) {
 };
 
 ManagerController.prototype.create = function () {
-    return new Manager("Manager" + this.managers.length + 1);
+    return new Manager("Manager" + (this.managers.length + 1));
 };
 
 ManagerController.prototype.delegate = function () {
@@ -101,11 +101,11 @@ ManagerController.prototype.delegate = function () {
 
     // Minimalize number of Managers by utilizing existing.
     // Check if each are free before creating a new Manager
-    for (i=0; i < managers.length; i++) {
-        if (managers[i].checkAvailability()) {
+    for (i=0; i < this.managers.length; i++) {
+        if (this.managers[i].checkAvailability()) {
             // Get the first avaliable manager
             if (!aquiredManager) {
-                aquiredManager = managers[i];
+                aquiredManager = this.managers[i];
             }
         }
     }

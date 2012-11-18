@@ -17,19 +17,13 @@ SMA.prototype.compute = function (price, timestamp) {
         oldPrice;
 
     if (this.array.length < this.period) {
-        // First N data points, simply take average
         this.array.push(price);
         this.sum += price;
         this.currentAverage = this.sum / this.array.length;
     } else {
-        // Otherwise
         this.array.push(price);
         oldPrice = this.array.shift();
         this.currentAverage = this.currentAverage - oldPrice / this.period + price / this.period;
-    }
-
-    if (timestamp < config.exchangeOpening + 15) {
-        // console.log(timestamp + ": " + Math.round(this.currentAverage * 1000) / 1000);
     }
 
     return Math.round(this.currentAverage * 1000) / 1000;
@@ -60,12 +54,7 @@ LWMA.prototype.compute = function (price, timestamp) {
     }
 
     denominator = (this.array.length*(this.array.length+1))/2;
-
     result = sum / denominator;
-
-    if (timestamp < config.exchangeOpening + 15) {
-        // console.log(timestamp + ": " + Math.round(result * 1000) / 1000);
-    }
 
     return Math.round(result * 1000) / 1000;
 };
@@ -83,10 +72,6 @@ EMA.prototype.compute = function (price, timestamp) {
         this.currentAverage = price;
     } else {
         this.currentAverage = this.currentAverage + (2.0/(this.period+1.0) * (price - this.currentAverage));
-    }
-
-    if (timestamp < config.exchangeOpening + 15) {
-        // console.log(timestamp + ": " + Math.round(this.currentAverage * 1000) / 1000);
     }
 
     return Math.round(this.currentAverage * 1000) / 1000;
@@ -118,10 +103,6 @@ TMA.prototype.compute = function (price, timestamp) {
     }
 
     result = sum / this.array.length;
-
-    if (timestamp < config.exchangeOpening + 15) {
-        // console.log(timestamp + ": " + Math.round(result * 1000) / 1000);
-    }
 
     return Math.round(result * 1000) / 1000;
 };

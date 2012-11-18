@@ -8,10 +8,9 @@ var net = require('net'),
 function beginFeed() {
     var client,
         qouteArray,
-        qouteTimeStamp = config.exchangeOpening;
-
-    var strategyInstance = new strategy();
-    var managerInstance = new manager();
+        qouteTimeStamp = config.exchangeOpening,
+        managerInstance = new manager(),
+        strategyInstance = new strategy();
 
     // Connect to Exchange and request to begin Feed
     client = net.connect(config.qouteServerPort, function() {
@@ -44,7 +43,7 @@ function beginFeed() {
                     strategyInstance.calculateMovingAverage(parseFloat(qouteArray[i]), qouteTimeStamp);
 
                     // Qoute has been validated and can be sent to a Manager!
-                    // managerInstance.trade(qouteArray[i], qouteTimeStamp);
+                    managerInstance.delegate(qouteArray[i], qouteTimeStamp);
 
                 } else {
                     if (qouteArray[i] == 'C') {
