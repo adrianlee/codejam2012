@@ -6,6 +6,8 @@
 #### Usage
 - Start Client & GUI processes via `./start`
 - Stop processes via `./stop`
+- Process stout log files: `client.log` & `client_gui.log`
+- Other usages: `forever -h`
 
 ####Login, SSH, sudo
 - Username: *ubuntu*
