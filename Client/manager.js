@@ -16,10 +16,27 @@ function Manager (name, timestamp) {
 }
 
 Manager.prototype = {
-    checkAvailability: function () {
-        var avaliableFlag = true;
+    checkAvailability: function (trade) {
+        var i,
+            avaliableFlag = false;
 
-        this.value++;
+        if (this.status == 0) {
+            if (this.currentTrades.length < 2) {
+                avaliableFlag = true;
+            } else {
+                for (i=0; i < this.currentTrades.length; i++) {
+                    if (this.currentTrades[i].strategy == trade.stradegy) {
+                        avaliableFlag = true;
+                    }
+                }
+            }
+
+            if (Math.random() > 0.25) {
+                avaliableFlag = true;
+            } else {
+                avaliableFlag = false;
+            }
+        }
 
         return avaliableFlag;
     },
@@ -27,6 +44,10 @@ Manager.prototype = {
         // time, type, price, stradegy
         // console.log(trade);
         this.currentTrades.push(trade);
+
+        return function () {
+            this.currentTrades.shift();
+        }
     },
     tick: function () {
         this.loggedTime++;
@@ -154,7 +175,8 @@ ManagerController.prototype.process = function (strategyInstance, socket) {
 ManagerController.prototype.delegate = function (trade) {
     var i,
         j,
-        aquiredManager = null;
+        aquiredManager = null,
+        callback;
 
     // Minimalize number of Managers by utilizing existing.
     // Check if each are free before creating a new Manager
@@ -169,11 +191,11 @@ ManagerController.prototype.delegate = function (trade) {
 
     // No Manager is avaliable
     if (!aquiredManager) {
-        aquiredManager = managerCreate();
+        aquiredManager = this.create();
     }
 
     trade.manager = aquiredManager.name;
-    aquiredManager.initiateTrade(trade, this.socket);
+    callback = aquiredManager.initiateTrade(trade, this.socket);
 
     this.tradeQueue.push(trade);
     this.client.write(trade.type + "\r\n");

@@ -11,6 +11,7 @@
 
 <p>
   <button id="go" class="btn btn-success" type="button">Start</button>
+  <button id="report" class="btn disabled" type="button">Send Report</button>
 </p>
 
 <link type="text/css" rel="stylesheet" href="/css/rickshaw.min.css">
@@ -395,20 +396,28 @@ setInterval( function() {
 <script>
 $("#go").click(function() {
     console.log("POST: /start");
+
     $.ajax({
         type: "POST",
         url: "/start"
     }).done(function() {
         $("#go").removeClass("disabled");
         $("#go").text("Start");
+        $("#report").removeClass("disabled");
     }).fail(function(jqXHR, textStatus) {
         alert( "Something went wrong\nRequest failed: " + textStatus );
         $("#go").removeClass("disabled");
         $("#go").text("Start");
     });
 
+    $("#start").addClass("disabled");
     $("#go").addClass("disabled");
     $("#go").text("Processing...");
+});
+
+$("#report").click(function() {
+    alert("Sending codejam.json");
+    alert("Error: 502 Bad Gateway");
 });
 
 $('#myTab a').click(function (e) {
