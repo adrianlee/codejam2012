@@ -3,10 +3,10 @@
 Adrian Lee
 adrian.lee@mail.mcgill.ca
 
-Node.js
-D3.js
-Bootstrap
-Redis
+- Node.js
+- D3.js
+- Bootstrap
+- Redis
 
 ## Virtual Machine
 ### Ubuntu Server 12.10 x86
