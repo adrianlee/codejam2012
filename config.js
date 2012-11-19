@@ -1,6 +1,6 @@
 module.exports = {
     verbose: false,
-    exchangeIP: "192.168.2.10",
+    exchangeIP: "localhost",
     qouteServerPort: 9000,
     marketServerPort: 9001,
     tradeServerPort: 3000,

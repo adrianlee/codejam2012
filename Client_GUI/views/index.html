@@ -1,5 +1,5 @@
-<h2>Hello Judges,</h2>
 <div id="debug">
+<h2>Hello Judges,</h2>
 <ul>
     <li>Graph displays last 200 data points</li>
     <li>Time in X-axis is off to display only the last 200 data points</li>
@@ -135,128 +135,132 @@
 }
 </style>
 
+<div class="row">
+<div class="span6">
+  <h3>Simple Moving Average</h3>
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#a">Graph</a></li>
+    <li><a href="#b">History</a></li>
+  </ul>
 
-
-<h3>Simple Moving Average</h3>
-<ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#a">Graph</a></li>
-  <li><a href="#b">History</a></li>
-</ul>
-
-<div class="tab-content">
-  <div class="tab-pane active" id="a">
-    <div id="chart_container">
-            <div id="y_axis"></div>
-            <div id="chart"></div>
-            <div id="legend"></div>
+  <div class="tab-content">
+    <div class="tab-pane active" id="a">
+      <div id="chart_container">
+              <div id="y_axis"></div>
+              <div id="chart"></div>
+              <div id="legend"></div>
+      </div>
     </div>
-  </div>
-  <div class="tab-pane" id="b">
-    <table id="table0" class="table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Type</th>
-          <th>Price</th>
-          <th>Manager</th>
-        </tr>
-      </thead>
-      <tbody id="btr">
-      </tbody>
-    </table>
+    <div class="tab-pane" id="b">
+      <table id="table0" class="table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Manager</th>
+          </tr>
+        </thead>
+        <tbody id="btr">
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+<div class="span6">
+  <h3>Linear Weighted Moving Average</h3>
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#c">Graph</a></li>
+    <li><a href="#d">History</a></li>
+  </ul>
 
-
-<h3>Linear Weighted Moving Average</h3>
-<ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#c">Graph</a></li>
-  <li><a href="#d">History</a></li>
-</ul>
-
-<div class="tab-content">
-  <div class="tab-pane active" id="c">
-    <div id="chart_container1">
-            <div id="y_axis1"></div>
-            <div id="chart1"></div>
-            <div id="legend1"></div>
+  <div class="tab-content">
+    <div class="tab-pane active" id="c">
+      <div id="chart_container1">
+              <div id="y_axis1"></div>
+              <div id="chart1"></div>
+              <div id="legend1"></div>
+      </div>
     </div>
-  </div>
-  <div class="tab-pane" id="d">
-    <table id="table0" class="table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Type</th>
-          <th>Price</th>
-          <th>Manager</th>
-        </tr>
-      </thead>
-      <tbody id="dtr">
-      </tbody>
-    </table>
+    <div class="tab-pane" id="d">
+      <table id="table0" class="table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Manager</th>
+          </tr>
+        </thead>
+        <tbody id="dtr">
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+<div class="span6">
+  <h3>Exponential Moving Average</h3>
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#e">Graph</a></li>
+    <li><a href="#f">History</a></li>
+  </ul>
 
-<h3>Exponential Moving Average</h3>
-<ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#e">Graph</a></li>
-  <li><a href="#f">History</a></li>
-</ul>
-
-<div class="tab-content">
-  <div class="tab-pane active" id="e">
-    <div id="chart_container2">
-            <div id="y_axis2"></div>
-            <div id="chart2"></div>
-            <div id="legend2"></div>
+  <div class="tab-content">
+    <div class="tab-pane active" id="e">
+      <div id="chart_container2">
+              <div id="y_axis2"></div>
+              <div id="chart2"></div>
+              <div id="legend2"></div>
+      </div>
     </div>
-  </div>
-  <div class="tab-pane" id="f">
-    <table id="table0" class="table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Type</th>
-          <th>Price</th>
-          <th>Manager</th>
-        </tr>
-      </thead>
-      <tbody id="ftr">
+    <div class="tab-pane" id="f">
+      <table id="table0" class="table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Manager</th>
+          </tr>
+        </thead>
+        <tbody id="ftr">
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+<div class="span6">
+  <h3>Triangular Moving Average</h3>
+  <ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#g">Graph</a></li>
+    <li><a href="#h">History</a></li>
+  </ul>
 
-<h3>Triangular Moving Average</h3>
-<ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#g">Graph</a></li>
-  <li><a href="#h">History</a></li>
-</ul>
-
-<div class="tab-content">
-  <div class="tab-pane active" id="g">
-    <div id="chart_container3">
-            <div id="y_axis3"></div>
-            <div id="chart3"></div>
-            <div id="legend3"></div>
+  <div class="tab-content">
+    <div class="tab-pane active" id="g">
+      <div id="chart_container3">
+              <div id="y_axis3"></div>
+              <div id="chart3"></div>
+              <div id="legend3"></div>
+      </div>
+    </div>
+    <div class="tab-pane" id="h">
+      <table id="table0" class="table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Manager</th>
+          </tr>
+        </thead>
+        <tbody id="htr">
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="tab-pane" id="h">
-    <table id="table0" class="table">
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Type</th>
-          <th>Price</th>
-          <th>Manager</th>
-        </tr>
-      </thead>
-      <tbody id="htr">
-      </tbody>
-    </table>
-  </div>
+</div>
 </div>
 
 {{#extend "scripts"}}
