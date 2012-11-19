@@ -24,6 +24,8 @@ to the several strategies. The application will also display real-time graphs fo
 the indicators of the various strategies. Finally, the trade history must be tracked, and supervised by 
 trade managers that your application will schedule.
 
+[Proposal Document](https://github.com/adrianlee/codejam2012/blob/master/Code%20Jam%20Proposal.pdf?raw=true)
+
 ## Virtual Machine
 ### Ubuntu Server 12.10 x86
 
