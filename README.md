@@ -1,8 +1,24 @@
-#codejam2012
+#McGill Code Jam 3
 
-Adrian Lee
-adrian.lee@mail.mcgill.ca
+**Team Members**<br/>
+Adrian Lee adrian.lee@mail.mcgill.ca
 
+Node.js v0.8.14, D3.js v2, Bootstrap v2, Redis v2.6.4
+
+## Problem
+You have been selected by Morgan Stanley’s Electronic Trading group (MSET) to provide a platform for 
+testing out new low-latency trading strategies on electronic exchanges. Trading strategies are a 
+predefined set of rules for making trading decisions. Certain strategies are better suited to be executed 
+algorithmically, via a computer, to take advantage of faster processing time. On a given exchange, there 
+are many trading strategies being executed, and often the speed in which an algorithm reacts to a given 
+market condition can greatly influence its profitability. MSET would like to benchmark several strategies
+in order to find the best one.
+
+Your task is to build an application that will handle trading, scheduling, and reporting for MSET. Your 
+application will connect to an exchange’s price feed, process incoming prices and make trades according 
+to the several strategies. The application will also display real-time graphs for the price feed, as well as 
+the indicators of the various strategies. Finally, the trade history must be tracked, and supervised by 
+trade managers that your application will schedule.
 
 ## Virtual Machine
 ### Ubuntu Server 12.10 x86
