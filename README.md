@@ -4,7 +4,7 @@
 ![App Screenshot](https://raw.github.com/adrianlee/codejam2012/master/screenshot.png)
 
 **Team Members**<br/>
-Adrian Lee adrian.lee@mail.mcgill.ca
+Adrian Lee
 
 
 Node.js v0.8.14, D3.js v2, Bootstrap v2, Redis v2.6.4
